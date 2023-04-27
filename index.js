@@ -2,18 +2,18 @@ console.clear();
 require('dotenv').config()
 const Discord = require('discord.js')
 const fs = require('fs');
-const { checkCommandModule, checkProperties } = require('./events/validData'); 
+const { checkCommandModule, checkProperties } = require('./events/validData');
 
 const prefix = '!'
 
 let emo = {
-  time: '<:ev_039:1051163648216805587>',
-  warning : '<:ev_038:1051163644525817906>',
-  true: '<:ev_018:1051163570672500766>',
-  false: '<:ev_021:1051163582055845898>',
-  gift: '<:ev_000:1051163504880660673>',
-  tada: '<:ev_011:1051163544835604562>',
-  embedcolor : '#1f1f1f',
+  time: '<:ev40:1086182034965282826>',
+  warning: '<:ev39:1086182030028591164>',
+  true: '<:ev19:1086181933597339730>',
+  false: '<:ev22:1086181948554231890>',
+  gift: '<:ev1:1086181847358246963>',
+  tada: '<:ev12:1086181898377777152>',
+  embedcolor: '#1d1d1d',
   prefix: prefix,
 }
 
@@ -38,10 +38,10 @@ process.on('multipleResolves', (type, promise, reason) => {
 
 const intents = new Discord.Intents(32767);
 const client = new Discord.Client({ intents });
-  
-client.commands = new Discord.Collection()   
- 
- 
+
+client.commands = new Discord.Collection()
+
+
 
 
 fs.readdir('./src/commands', (err, folders) => {
@@ -61,19 +61,18 @@ fs.readdir('./src/commands', (err, folders) => {
       })
     })
   })
-}) 
+})
 client.on('messageCreate', async message => {
   const [cmd] = message.content.split(' ');
   if (message.author.bot) return;
   client.commands.find(command => {
     if (`${prefix}${command.name.toLowerCase()}` == `${cmd.slice(0).toLowerCase()}` && !command.name.startsWith('$P') || command.aliases && command.aliases.includes(cmd.slice(0).toLowerCase()) && !command.name.startsWith('$P')) {
       const args = message.content.slice(cmd.slice(0).length).trim().split(/ +/);
-      if (command.permissions)
-      {
+      if (command.permissions) {
         if (!message.member.permissions.has(command.permissions.user)) return message.reply(`**${emo.warning} - you don't have permission to use that command**`);
         if (!message.guild.members.cache.get(`${client.user.id}`).permissions.has(command.permissions.bot)) return message.reply(`**${emo.warning} - i don't have permission to excute that command**`);
       }
-      command.run(message, args, client,emo)
+      command.run(message, args, client, emo)
     }
   });
 })
