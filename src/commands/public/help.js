@@ -1,19 +1,29 @@
-const Discord = require('discord.js');
+const { embedColor, prefix } = require('../../../config/config.json')
 module.exports = {
-  name: "help",
-  description: "",
-  category: 'Public',
-  async run(message, args, client, emo) {
+    name: "help",
+    description: "",
+    async run(message, args, client) {
+        const embed = {
+            color: embedColor,
+            title: `${client.user.username} Commands`,
+            thumbnail: { url: client.user.displayAvatarURL() },
+            author: { name: `${client.user.username}`, icon_url: client.user.displayAvatarURL() },
+            fields: [
+                {
+                    name: `> ${prefix}start`,
+                    value: `to start a new giveaway`,
+                },
+                {
+                    name: `> ${prefix}info`,
+                    value: `to get information about the bot`,
+                },
+                {
+                    name: `> ${prefix}help:`,
+                    value: `to get the bots command menu`,
+                },
+            ],
+        }
 
-    const embed = new Discord.MessageEmbed()
-      .setColor(`${emo.embedcolor}`)
-      .setTitle(`${client.user.username} Commands`)
-      .setThumbnail(client.user.avatarURL({ dynamic: true }))
-      .setAuthor({ name: `${client.user.username}`, iconURL: `${client.user.avatarURL({ dynamic: true })}` })
-      .setFooter(`${message.guild.name}`)
-      message.reply({content : `**the bot prefix is : \`${emo.prefix}\`**`,embeds:[embed]})
-
-
-
-  }
+        message.reply({ embeds: [embed] })
+    }
 }
