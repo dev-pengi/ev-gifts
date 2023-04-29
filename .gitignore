@@ -1,2 +1,6 @@
 /node_modules
+/errors
 /.env
+/cache/*.json
+/package-lock.json
+/config/tokens.json
